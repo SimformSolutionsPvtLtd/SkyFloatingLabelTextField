@@ -206,9 +206,9 @@ open class SkyFloatingLabelTextField: UITextField { // swiftlint:disable:this ty
     */
     open var titleFormatter: ((String) -> String) = { (text: String) -> String in
         if #available(iOS 9.0, *) {
-            return text.localizedUppercase
+            return text.localizedCapitalized
         } else {
-            return text.uppercased()
+            return text.capitalized
         }
     }
 
@@ -295,6 +295,12 @@ open class SkyFloatingLabelTextField: UITextField { // swiftlint:disable:this ty
     @IBInspectable open var title: String? {
         didSet {
             updateControl()
+        }
+    }
+    
+    @IBInspectable open var leftMargin: CGFloat = 0 {
+        didSet {
+            updateLineView()
         }
     }
 
@@ -630,7 +636,7 @@ open class SkyFloatingLabelTextField: UITextField { // swiftlint:disable:this ty
      */
     open func lineViewRectForBounds(_ bounds: CGRect, editing: Bool) -> CGRect {
         let height = editing ? selectedLineHeight : lineHeight
-        return CGRect(x: 0, y: bounds.size.height - height, width: bounds.size.width, height: height)
+        return CGRect(x: -leftMargin, y: bounds.size.height - height, width: bounds.size.width + leftMargin, height: height)
     }
 
     /**
