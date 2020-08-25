@@ -298,11 +298,18 @@ open class SkyFloatingLabelTextField: UITextField { // swiftlint:disable:this ty
         }
     }
     
-    @IBInspectable open var leftMargin: CGFloat = 0 {
+    @IBInspectable open var lineLeftMargin: CGFloat = 0 {
         didSet {
             updateLineView()
         }
     }
+    
+    @IBInspectable open var titleTopMargin: CGFloat = 0 {
+        didSet {
+            updateTitleLabel()
+        }
+    }
+    
 
     // Determines whether the field is selected. When selected, the title floats above the textbox.
     open override var isSelected: Bool {
@@ -622,7 +629,7 @@ open class SkyFloatingLabelTextField: UITextField { // swiftlint:disable:this ty
     */
     open func titleLabelRectForBounds(_ bounds: CGRect, editing: Bool) -> CGRect {
         if editing {
-            return CGRect(x: 0, y: 0, width: bounds.size.width, height: titleHeight())
+            return CGRect(x: 0, y: titleTopMargin, width: bounds.size.width, height: titleHeight())
         }
         return CGRect(x: 0, y: titleHeight(), width: bounds.size.width, height: titleHeight())
     }
@@ -636,7 +643,7 @@ open class SkyFloatingLabelTextField: UITextField { // swiftlint:disable:this ty
      */
     open func lineViewRectForBounds(_ bounds: CGRect, editing: Bool) -> CGRect {
         let height = editing ? selectedLineHeight : lineHeight
-        return CGRect(x: -leftMargin, y: bounds.size.height - height, width: bounds.size.width + leftMargin, height: height)
+        return CGRect(x: -lineLeftMargin, y: bounds.size.height - height, width: bounds.size.width + lineLeftMargin, height: height)
     }
 
     /**
